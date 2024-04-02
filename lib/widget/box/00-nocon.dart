@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class NOCON extends StatelessWidget {
-  const NOCON({Key? key}) : super(key: key);
+  NOCON({
+    Key? key,
+    this.load,
+  }) : super(key: key);
+  bool? load;
 
   @override
   Widget build(BuildContext context) {
+    bool _load = load ?? false;
     return Padding(
       padding: const EdgeInsetsDirectional.only(
           start: 15, end: 15, top: 10, bottom: 10),
@@ -15,7 +20,21 @@ class NOCON extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           color: Colors.white,
         ),
-        child: const Center(child: Text("--")),
+        child: Center(
+          child: _load
+              ? Text("--")
+              : SizedBox(
+                  height: 75,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      SizedBox(width: 30),
+                      CircularProgressIndicator(),
+                      SizedBox(width: 20),
+                      Text("Loading"),
+                    ],
+                  )),
+        ),
       ),
     );
   }

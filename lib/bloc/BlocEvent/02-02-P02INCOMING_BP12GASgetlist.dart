@@ -16,12 +16,12 @@ String server = GLOserver;
 DateTime now = new DateTime.now();
 
 /// Event being processed by [CounterBloc].
-abstract class listdataincommingEvent {}
+abstract class P02INCOMING_BP12GASgetlistEvent {}
 
 /// Notifies bloc to increment state.
-class GetDataPressed extends listdataincommingEvent {}
+class GetDataPressed extends P02INCOMING_BP12GASgetlistEvent {}
 
-class FlushITDataPressed extends listdataincommingEvent {}
+class FlushITDataPressed extends P02INCOMING_BP12GASgetlistEvent {}
 
 class CounterValue extends P02INCOMING_BP12GASgetlist {
   final int value;
@@ -29,7 +29,7 @@ class CounterValue extends P02INCOMING_BP12GASgetlist {
 }
 
 class P02INCOMING_BP12GASgetlist
-    extends Bloc<listdataincommingEvent, List<listdataincomming>> {
+    extends Bloc<P02INCOMING_BP12GASgetlistEvent, List<listdataincomming>> {
   /// {@macro counter_bloc}
   P02INCOMING_BP12GASgetlist() : super(<listdataincomming>[]) {
     on<GetDataPressed>((event, emit) {
@@ -44,7 +44,7 @@ class P02INCOMING_BP12GASgetlist
     final response = await Dio().post(
       server + "01BP12GAS/getmaster",
       data: {
-        "MATNR": INCOMINGDATAoutput.MATNRnow,
+        "MATNR": P02INCOMINGvar_BP12GAS_INCOMINGDATAoutput.MATNRnow,
       },
     );
 
@@ -68,6 +68,11 @@ class P02INCOMING_BP12GASgetlist
             stateoutput
                 .add(listdataincomming(ITEMname: "NO PATTERN", ITEMcode: "-"));
           }
+          List<String> listitemss = [];
+          for (var i = 0; i < INCOMMINGlist.length; i++) {
+            listitemss.add(INCOMMINGlist[i]['ITEMs']);
+          }
+          P02INCOMINGvar_BP12GAS.ListITEM = listitemss;
           for (var i = 0; i < INCOMMINGlist.length; i++) {
             for (var j = 0; j < ITEMnamelist.length; j++) {
               if (ITEMnamelist[j]['masterID'].toString() ==
@@ -118,9 +123,11 @@ class listdataincomming {
     this.ITEMcode = '',
     this.pcs = '',
     this.fre = '',
+    this.PIC = '',
   });
   String ITEMname;
   String ITEMcode;
   String pcs;
   String fre;
+  String PIC;
 }

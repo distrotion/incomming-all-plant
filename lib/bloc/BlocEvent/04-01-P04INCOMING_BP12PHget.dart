@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import '../../data/global.dart';
 import '../../model/model.dart';
 
-import '../../page/P02INCOMING_BP12GAS/P02INCOMING_BP12GASmain.dart';
+import '../../page/P04INCOMING_PB12PH/P04INCOMING_BP12PHmain.dart';
 import '../../widget/common/Loading.dart';
 
 // String server = 'http://localhost:10000/';
@@ -22,27 +22,27 @@ class GetDataPressed extends DataSetEvent {}
 
 class FlushITDataPressed extends DataSetEvent {}
 
-class CounterValue extends P02INCOMING_BP12GASget {
+class CounterValue extends P04INCOMING_BP12PHget {
   final int value;
   CounterValue(this.value);
 }
 
-class P02INCOMING_BP12GASget extends Bloc<DataSetEvent, List<dataset>> {
+class P04INCOMING_BP12PHget extends Bloc<DataSetEvent, List<dataset>> {
   /// {@macro counter_bloc}
-  P02INCOMING_BP12GASget() : super(<dataset>[]) {
+  P04INCOMING_BP12PHget() : super(<dataset>[]) {
     on<GetDataPressed>((event, emit) {
       return _getdata([], emit);
     });
   }
   Future<void> _getdata(
       List<dataset> toAdd, Emitter<List<dataset>> emit) async {
-    FreeLoading(P02INCOMING_BP12GASmaincontext);
+    FreeLoading(P04INCOMING_BP12PHmaincontext);
 
     // print(zreoover(now.day.toString()));
     final response = await Dio().post(
       server + "getsap/getincomming",
       data: {
-        "IMP_PRCTR": "24000",
+        "IMP_PRCTR": "21000",
         "IMP_WERKS": "2100",
         // "LAST_DATE":
         //     "${zreoover(now.day.toString())}-${zreoover(now.month.toString())}-${now.year}",
@@ -51,11 +51,12 @@ class P02INCOMING_BP12GASget extends Bloc<DataSetEvent, List<dataset>> {
         "LAST_TIME": "19:00:08"
       },
     );
-    Navigator.pop(P02INCOMING_BP12GASmaincontext);
+    Navigator.pop(P04INCOMING_BP12PHmaincontext);
 
     var data_input = [];
     List<dataset> stateoutput = [];
     if (response.statusCode == 200) {
+      // Navigator.pop(P04INCOMING_BP12PHmaincontext);
       // var databuff = jsonDecode(response.body);
       var databuff = response.data;
       data_input = databuff;
@@ -95,7 +96,7 @@ class P02INCOMING_BP12GASget extends Bloc<DataSetEvent, List<dataset>> {
       //stateoutput = data_test
       emit(stateoutput);
     } else {
-      // Navigator.pop(P02INCOMING_BP12GASmaincontext);
+      // Navigator.pop(P04INCOMING_BP12PHmaincontext);
       print("where is my server");
       //stateoutput = data_test
       stateoutput = [];

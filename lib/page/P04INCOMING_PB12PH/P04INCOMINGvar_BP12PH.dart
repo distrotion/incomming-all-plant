@@ -3,7 +3,7 @@
 //   static String CHARGnow = '';
 // }
 
-class P02INCOMINGvar_BP12GAS {
+class P04INCOMINGvar_BP12PH {
   static int ItemNow = 0;
   static bool modeNOGOOD = false;
   static String ItemName = '';
@@ -17,7 +17,7 @@ class P02INCOMINGvar_BP12GAS {
   static List<String> ListITEM = [];
 }
 
-class P02INCOMINGvar_BP12GAS_INCOMINGDATAoutput {
+class P04INCOMINGvar_BP12PH_INCOMINGDATAoutput {
   static String MATNRnow = '';
   static String CHARGnow = '';
   static String MBLNRnow = '';
@@ -43,7 +43,7 @@ class P02INCOMINGvar_BP12GAS_INCOMINGDATAoutput {
   static String PiecesDropdownSelected = '';
 }
 
-class P02INCOMINGvar_BP12GAS_NOGOODcon {
+class P04INCOMINGvar_BP12PH_NOGOODcon {
   static int NoGoodPage = 1;
   static String PiecesDropdownSelected = '1';
   static int yesno = 0;

@@ -119,8 +119,9 @@ class NormalCheck extends StatelessWidget {
                         start: 15, end: 5, top: 10, bottom: 10),
                     child: InkWell(
                       onTap: () {
-                        if ((botonCOLOR ?? true) && (blockGOOD ?? true)) {
-                        } else {}
+                        if (modeNOGOODRT != null) {
+                          modeNOGOODRT!(true);
+                        }
                       },
                       child: Container(
                         // color: Colors.pink,
@@ -143,11 +144,9 @@ class NormalCheck extends StatelessWidget {
                         start: 5, end: 15, top: 10, bottom: 10),
                     child: InkWell(
                       onTap: () {
-                        if ((botonCOLOR ?? true) && (blockGOOD ?? true)) {
-                          if (modeNOGOODRT != null) {
-                            modeNOGOODRT!(true);
-                          }
-                        } else {}
+                        if (modeNOGOODRT != null) {
+                          modeNOGOODRT!(false);
+                        }
                       },
                       child: Container(
                         // color: Colors.yellow,

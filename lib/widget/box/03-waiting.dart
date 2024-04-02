@@ -4,9 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/Cubit/Rebuild.dart';
 
 class WattingItem extends StatelessWidget {
-  WattingItem({Key? key, this.blockGood, this.blockReject}) : super(key: key);
-  bool? blockGood;
-  bool? blockReject;
+  WattingItem({
+    Key? key,
+    this.Confirm,
+    this.NOConfirm,
+    this.PCS,
+    this.Fre,
+  }) : super(key: key);
+  Function(bool)? Confirm;
+  Function(bool)? NOConfirm;
+  String? PCS;
+  String? Fre;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +55,7 @@ class WattingItem extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(8)),
                               color: Colors.white,
                             ),
-                            child: Center(child: Text("10")),
+                            child: Center(child: Text(PCS ?? "10")),
                           ),
                         )),
                     Expanded(
@@ -62,7 +70,7 @@ class WattingItem extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(8)),
                               color: Colors.white,
                             ),
-                            child: Center(child: Text("pcs/lot")),
+                            child: Center(child: Text(Fre ?? "pcs/lot")),
                           ),
                         )),
                     Expanded(
@@ -110,7 +118,9 @@ class WattingItem extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () {
-                      if (blockGood ?? true) {}
+                      if (Confirm != null) {
+                        Confirm!(true);
+                      }
                     },
                     child: Container(
                         // color: Colors.red,
@@ -131,7 +141,9 @@ class WattingItem extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () {
-                      if (blockReject ?? true) {}
+                      if (Confirm != null) {
+                        NOConfirm!(true);
+                      }
                     },
                     child: Container(
                         // color: Colors.red,

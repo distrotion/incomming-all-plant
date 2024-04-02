@@ -9,7 +9,7 @@ import '../../model/model.dart';
 import '../../widget/common/Loading.dart';
 
 import 'P02INCOMING_BP12GAS_CONSOLEbox/P02INCOMING_BP12GAS_CONSOLEbox.dart';
-import 'dummydata.dart';
+import '../../data/dummydata.dart';
 import 'P02INCOMINGvar_BP12GAS.dart';
 
 //------------------------------------
@@ -147,7 +147,7 @@ class _TableBodyState extends State<TableBody> {
                     header: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('INCOMING LIST'),
+                        const Text('INCOMING BP12 GAS'),
                         Row(
                           children: [
                             // ElevatedButton(

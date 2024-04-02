@@ -5,6 +5,7 @@ import 'dart:js' as js;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../bloc/BlocEvent/02-02-P02INCOMING_BP12GASgetlist.dart';
 import '../../../bloc/Cubit/Rebuild.dart';
 import '../../../data/Base64Img.dart';
 import '../../../model/model.dart';
@@ -15,10 +16,6 @@ import '../../../widget/box/01-normal.dart';
 import '../../../widget/box/02-nogood.dart';
 import '../../../widget/box/03-waiting.dart';
 import '../P02INCOMINGvar_BP12GAS.dart';
-import '00-P02INCOMING_BP12GAS_CONSOLEbox-nocon.dart';
-import '01-P02INCOMING_BP12GAS_CONSOLEbox-normal.dart';
-import '02-P02INCOMING_BP12GAS_CONSOLEbox-nogood.dart';
-import '03-P02INCOMING_BP12GAS-waiting.dart';
 
 void P02INCOMING_BP12GAS_ConsoleBoxBODY(dataset data, BuildContext contextin) {
   showDialog(
@@ -28,7 +25,7 @@ void P02INCOMING_BP12GAS_ConsoleBoxBODY(dataset data, BuildContext contextin) {
       return Container(
         // color: Colors.blue,
         child: Dialog(
-            child: ConsoleBloc(
+            child: P02BlocBody(
           data: data,
         )),
       );
@@ -36,21 +33,44 @@ void P02INCOMING_BP12GAS_ConsoleBoxBODY(dataset data, BuildContext contextin) {
   );
 }
 
+class P02BlocBody extends StatelessWidget {
+  /// {@macro counter_page}
+  P02BlocBody({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+  dataset data;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (_) => P02INCOMING_BP12GASgetlist(),
+        child: BlocBuilder<P02INCOMING_BP12GASgetlist, List<listdataincomming>>(
+          builder: (context, list) {
+            return ConsoleBloc(
+              data: data,
+              list: list,
+            );
+          },
+        ));
+  }
+}
+
 class ConsoleBloc extends StatelessWidget {
   ConsoleBloc({
     Key? key,
     required this.data,
-    this.dataBLOC,
+    this.list,
   }) : super(key: key);
   dataset data;
+  List<listdataincomming>? list;
 
-  List<INCOMINGmaster>? dataBLOC;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: ConsoleWidget(
         data: data,
-        dataBLOC: dataBLOC,
+        list: list,
       ),
     );
   }
@@ -60,11 +80,11 @@ class ConsoleWidget extends StatefulWidget {
   ConsoleWidget({
     Key? key,
     required this.data,
-    this.dataBLOC,
+    this.list,
   }) : super(key: key);
   dataset data;
+  List<listdataincomming>? list;
 
-  List<INCOMINGmaster>? dataBLOC;
   @override
   State<ConsoleWidget> createState() => _ConsoleWidgetState();
 }
@@ -73,55 +93,114 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
   @override
   void initState() {
     super.initState();
+    P02INCOMINGvar_BP12GAS.ItemNow = 0;
+    context.read<P02INCOMING_BP12GASgetlist>().add(GetDataPressed());
   }
 
   @override
   Widget build(BuildContext context) {
-    List<INCOMINGmaster> _dataBLOC =
-        widget.dataBLOC ?? [INCOMINGmaster(ITEMs: '')];
-    int limmit = _dataBLOC.length;
+    List<listdataincomming> _list = widget.list ?? [];
     List<Widget> CONCOLE = [];
     Widget con = NOCON();
 
-    con = NOGOODconfirm();
-    // con = WattingItem();
-    // con = NormalCheck();
+    // con = NormalCheck(
+    //   PCS: "5",
+    //   Fre: "g/s",
+    //   status: "Good", //GOOD //reject
+    //   botonCOLOR: false,
+    //   modeNOGOODRT: (s) {
+    //     print(s); //Good=true,NoGood=false
+    //   },
+    // );
 
-    // P02INCOMINGvar_BP12GAS.ItemName =
-    //     _dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].ITEMs;
-    // if (limmit > 0) {
-    //   if (_dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].ITEMs == '-' ||
-    //       _dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].ITEMs == '') {
-    //     con = const P02INCOMINGvar_BP12GAS_NOCON();
-    //   } else {
-    //     if (P02INCOMINGvar_BP12GAS.modeNOGOOD) {
-    //       con = P02INCOMINGvar_BP12GAS_NOGOODconfirm(
-    //         blockFINISH: INCOMINGDATAoutput.UserNO != '',
-    //       );
-    //     } else if (_dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].STATE == 'WAIT') {
-    //       con = P02INCOMINGvar_BP12GAS_WattingItem(
-    //         blockGood: INCOMINGDATAoutput.UserNO != '',
-    //         blockReject: INCOMINGDATAoutput.UserNO != '',
-    //       );
+    // con = NOGOODconfirm(
+    //   NoGoodPage: P02INCOMINGvar_BP12GAS_NOGOODcon.NoGoodPage,
+    //   yesno: P02INCOMINGvar_BP12GAS_NOGOODcon.yesno,
+    //   yesnoRT: (n) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.yesno = n;
+    //     });
+    //   },
+    //   SpacialAccText: P02INCOMINGvar_BP12GAS_NOGOODcon.SpacialAccText,
+    //   SpacialAccTextrt: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.SpacialAccText = s;
+    //     });
+    //   },
+    //   attper: P02INCOMINGvar_BP12GAS_NOGOODcon.attper,
+    //   attperrt: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.attper = s;
+    //     });
+    //   },
+    //   PiecesDropdownSelected:
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.PiecesDropdownSelected,
+    //   PiecesDropdownSelectedRT: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.PiecesDropdownSelected = s;
+    //     });
+    //   },
+    //   NextorBack: (s) {
+    //     if (P02INCOMINGvar_BP12GAS_NOGOODcon.yesno == 1) {
+    //       // print("NEXT");
+    //       setState(() {
+    //         P02INCOMINGvar_BP12GAS_NOGOODcon.NoGoodPage = 2;
+    //       });
     //     } else {
-    //       con = P02INCOMINGvar_BP12GAS_NormalCheck(
-    //         blockGOOD: INCOMINGDATAoutput.UserNO != '',
-    //         blockNOGOOD: INCOMINGDATAoutput.UserNO != '',
-    //         botonCOLOR: _dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].STATE ==
-    //                 'GOOD'
-    //             ? false
-    //             : _dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].STATE == 'reject'
-    //                 ? false
-    //                 : true,
-    //         PCS: _dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].PCS,
-    //         // Fre: _dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].FREQUENCY,
-    //         status: _dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow].STATE,
-    //       );
+    //       // print("BACK");
     //     }
-    //   }
-    // } else {
-    //   con = const P02INCOMINGvar_BP12GAS_NOCON();
-    // }
+    //   },
+    //   base64pic01: P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic01,
+    //   base64pic01RT: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic01 = s;
+    //     });
+    //   },
+    //   base64pic02: P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic02,
+    //   base64pic02RT: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic02 = s;
+    //     });
+    //   },
+    //   base64pic03: P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic03,
+    //   base64pic03RT: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic03 = s;
+    //     });
+    //   },
+    //   base64pic04: P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic04,
+    //   base64pic04RT: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic04 = s;
+    //     });
+    //   },
+    //   base64pic05: P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic05,
+    //   base64pic05RT: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic05 = s;
+    //     });
+    //   },
+    //   NoGoodPageRT: (s) {
+    //     setState(() {
+    //       P02INCOMINGvar_BP12GAS_NOGOODcon.NoGoodPage = 1;
+    //     });
+    //   },
+    //   modeNOGOODRT: (s) {
+    //     //Finish
+    //     print(s);
+    //   },
+    // );
+
+    // con = WattingItem(
+    //   PCS: "5",
+    //   Fre: "g/s",
+    //   Confirm: (b) {
+    //     print(b);
+    //   },
+    //   NOConfirm: (b) {
+    //     print(b);
+    //   },
+    // );
 
     print('--->${P02INCOMINGvar_BP12GAS.ItemNow}');
 
@@ -354,10 +433,7 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                             const SizedBox(
                               width: 10,
                             ),
-                            if (_dataBLOC[P02INCOMINGvar_BP12GAS.ItemNow]
-                                    .STATE ==
-                                'WAIT')
-                              ReportButton(),
+                            if (false) ReportButton(),
                           ],
                         )),
                   ],
@@ -389,9 +465,12 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                                 ),
                                 // color: Colors.red,
                                 child: Center(
-                                    child: Text(_dataBLOC[
-                                            P02INCOMINGvar_BP12GAS.ItemNow]
-                                        .ITEMs)),
+                                    child: Text(
+                                  _list.length == 0
+                                      ? 'Loading...'
+                                      : _list[P02INCOMINGvar_BP12GAS.ItemNow]
+                                          .ITEMname,
+                                )),
                               )),
                           const Expanded(
                               flex: 1,
@@ -402,10 +481,10 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                               flex: 2,
                               child: InkWell(
                                 onTap: () {
-                                  if (P02INCOMINGvar_BP12GAS.ItemNow != 0) {
-                                    P02INCOMINGvar_BP12GAS.ItemNow--;
-                                    BlocProvider.of<BlocPageRebuild>(context)
-                                        .rebuildPage();
+                                  if (P02INCOMINGvar_BP12GAS.ItemNow > 0) {
+                                    setState(() {
+                                      P02INCOMINGvar_BP12GAS.ItemNow--;
+                                    });
                                   }
                                 },
                                 child: Container(
@@ -426,10 +505,10 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                               child: InkWell(
                                 onTap: () {
                                   if (P02INCOMINGvar_BP12GAS.ItemNow <
-                                      limmit - 1) {
-                                    P02INCOMINGvar_BP12GAS.ItemNow++;
-                                    BlocProvider.of<BlocPageRebuild>(context)
-                                        .rebuildPage();
+                                      _list.length - 1) {
+                                    setState(() {
+                                      P02INCOMINGvar_BP12GAS.ItemNow++;
+                                    });
                                   }
                                 },
                                 child: Container(
@@ -503,9 +582,9 @@ class ReportButton extends StatelessWidget {
         child: const Text('Report'),
         onPressed: () {
           // contexttable.read<Report_Bloc>().add(CreateReport());
-          js.context.callMethod('open', [
-            'http://172.20.30.46/ReportServer?%2fReport+Project4%2fincomming-v1&rs:Format=PDF&rs:Command=Render&T1=${INCOMINGDATAoutput.MATNRnow}-${INCOMINGDATAoutput.CHARGnow}'
-          ]);
+          // js.context.callMethod('open', [
+          //   'http://172.20.30.46/ReportServer?%2fReport+Project4%2fincomming-v1&rs:Format=PDF&rs:Command=Render&T1=${INCOMINGDATAoutput.MATNRnow}-${INCOMINGDATAoutput.CHARGnow}'
+          // ]);
           // print(
           //     'http://172.20.30.46/ReportServer?%2fReport+Project4%2fincomming-v1&rs:Format=PDF&rs:Command=Render&T1=${MATNRnow}-${CHARGnow}');
         },

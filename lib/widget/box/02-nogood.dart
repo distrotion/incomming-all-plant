@@ -9,6 +9,7 @@ import 'package:image/image.dart' as IMG;
 import '../../../bloc/Cubit/Rebuild.dart';
 import '../../../styles/TextStyle.dart';
 import '../../../widget/common/ComInputText.dart';
+import '../../data/Base64Img.dart';
 
 class NOGOODconfirm extends StatelessWidget {
   NOGOODconfirm({
@@ -16,6 +17,7 @@ class NOGOODconfirm extends StatelessWidget {
     this.blockFINISH,
     this.NoGoodPage,
     this.yesno,
+    this.yesnoRT,
     this.undercontrol,
     this.base64pic01,
     this.base64pic01RT,
@@ -29,10 +31,18 @@ class NOGOODconfirm extends StatelessWidget {
     this.base64pic05RT,
     this.NoGoodPageRT,
     this.modeNOGOODRT,
+    this.SpacialAccText,
+    this.SpacialAccTextrt,
+    this.attper,
+    this.attperrt,
+    this.PiecesDropdownSelected,
+    this.PiecesDropdownSelectedRT,
+    this.NextorBack,
   }) : super(key: key);
   bool? blockFINISH;
   int? NoGoodPage;
   int? yesno;
+  Function(int)? yesnoRT;
   String? base64pic01;
   Function(String)? base64pic01RT;
   String? base64pic02;
@@ -46,6 +56,14 @@ class NOGOODconfirm extends StatelessWidget {
   Function(String)? NoGoodPageRT;
   Function(String)? modeNOGOODRT;
   bool? undercontrol;
+  String? SpacialAccText;
+  Function(String)? SpacialAccTextrt;
+  int? attper;
+  Function(int)? attperrt;
+
+  String? PiecesDropdownSelected;
+  Function(String)? PiecesDropdownSelectedRT;
+  Function(String)? NextorBack;
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +71,15 @@ class NOGOODconfirm extends StatelessWidget {
     if (NoGoodPage == 1) {
       outpage = WaittingP1(
         yesno: yesno,
-        yesnoRT: (s) {
-          //
-        },
+        yesnoRT: yesnoRT,
         undercontrol: undercontrol,
+        SpacialAccText: SpacialAccText,
+        SpacialAccTextrt: SpacialAccTextrt,
+        attper: attper,
+        attperrt: attperrt,
+        PiecesDropdownSelected: PiecesDropdownSelected,
+        PiecesDropdownSelectedRT: PiecesDropdownSelectedRT,
+        NextorBack: NextorBack,
       );
     } else if (NoGoodPage == 2) {
       outpage = WaittingP2(
@@ -118,6 +141,8 @@ class WaittingP1 extends StatefulWidget {
     this.attper,
     this.attperrt,
     this.NextorBack,
+    this.PiecesDropdownSelected,
+    this.PiecesDropdownSelectedRT,
   }) : super(key: key);
   int? yesno;
   Function(int)? yesnoRT;
@@ -125,8 +150,10 @@ class WaittingP1 extends StatefulWidget {
   String? SpacialAccText;
   Function(String)? SpacialAccTextrt;
   int? attper;
-  Function(String)? attperrt;
+  Function(int)? attperrt;
   Function(String)? NextorBack;
+  String? PiecesDropdownSelected;
+  Function(String)? PiecesDropdownSelectedRT;
 
   @override
   State<WaittingP1> createState() => _WaittingP1State();
@@ -263,7 +290,7 @@ class _WaittingP1State extends State<WaittingP1> {
                     child: InkWell(
                       onTap: () {
                         if (widget.attperrt != null) {
-                          widget.attperrt!("1");
+                          widget.attperrt!(1);
                         }
                       },
                       child: Container(
@@ -293,7 +320,7 @@ class _WaittingP1State extends State<WaittingP1> {
                     child: InkWell(
                       onTap: () {
                         if (widget.attperrt != null) {
-                          widget.attperrt!("2");
+                          widget.attperrt!(2);
                         }
                       },
                       child: Container(
@@ -329,7 +356,10 @@ class _WaittingP1State extends State<WaittingP1> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text("Amount", style: const TxtStyleWhiteBG()),
-                PiecesDropdown(),
+                PiecesDropdown(
+                  PiecesDropdownSelected: widget.PiecesDropdownSelected,
+                  PiecesDropdownSelectedRT: widget.PiecesDropdownSelectedRT,
+                ),
               ],
             ),
           ),
@@ -421,7 +451,7 @@ class _WaittingP2State extends State<WaittingP2> {
                   }
                 },
               ),
-              PicShow(base64: widget.base64pic01 ?? ''),
+              PicShow(base64: widget.base64pic01 ?? logo),
             ],
           ),
         ),
@@ -438,7 +468,7 @@ class _WaittingP2State extends State<WaittingP2> {
                   }
                 },
               ),
-              PicShow(base64: widget.base64pic02 ?? ''),
+              PicShow(base64: widget.base64pic02 ?? logo),
             ],
           ),
         ),
@@ -455,7 +485,7 @@ class _WaittingP2State extends State<WaittingP2> {
                   }
                 },
               ),
-              PicShow(base64: widget.base64pic03 ?? ''),
+              PicShow(base64: widget.base64pic03 ?? logo),
             ],
           ),
         ),
@@ -472,7 +502,7 @@ class _WaittingP2State extends State<WaittingP2> {
                   }
                 },
               ),
-              PicShow(base64: widget.base64pic04 ?? ''),
+              PicShow(base64: widget.base64pic04 ?? logo),
             ],
           ),
         ),
@@ -489,7 +519,7 @@ class _WaittingP2State extends State<WaittingP2> {
                   }
                 },
               ),
-              PicShow(base64: widget.base64pic05 ?? ''),
+              PicShow(base64: widget.base64pic05 ?? logo),
             ],
           ),
         ),
@@ -558,7 +588,7 @@ class _FileUploadButton01State extends State<FileUploadButton01> {
     return ElevatedButton(
       child: Text('UPLOAD FILE'),
       onPressed: () async {
-        var picked = await FilePicker.platform.pickFiles();
+        var picked = await FilePicker.platform.pickFiles(type: FileType.image);
         Uint8List? imageByte;
         Uint8List? resizedData;
 
@@ -665,7 +695,7 @@ class _PiecesDropdownState extends State<PiecesDropdown> {
         value: widget.PiecesDropdownSelected,
         onChanged: (String? newValue) {
           if (widget.PiecesDropdownSelectedRT != null) {
-            widget.PiecesDropdownSelectedRT!("1");
+            widget.PiecesDropdownSelectedRT!(newValue ?? '1');
           }
         },
         items: items

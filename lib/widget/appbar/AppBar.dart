@@ -96,7 +96,7 @@ class Logo1 extends StatelessWidget {
       child: Container(
         color: const Color(0xff0b1327),
         child: const Text(
-          "TPK UI PH BP12",
+          "INCOMING APP",
           style: TextStyle(
             fontFamily: 'Mitr',
             color: Colors.white,

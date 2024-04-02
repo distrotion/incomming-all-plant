@@ -9,6 +9,7 @@ import '../../model/model.dart';
 import '../../widget/common/Loading.dart';
 
 import '../../data/dummydata.dart';
+import 'P04INCOMING_BP12PH_CONSOLEbox/P04INCOMING_BP12PH_CONSOLEbox.dart';
 import 'P04INCOMINGvar_BP12PH.dart';
 
 //------------------------------------
@@ -355,7 +356,7 @@ class MyData extends DataTableSource {
           //     // ConsoleBox(data, _list01),
           //     );
 
-          // P04INCOMING_BP12PH_ConsoleBoxBODY(data, context);
+          P04INCOMING_BP12PH_ConsoleBoxBODY(data, context);
           notifyListeners();
         },
         cells: [

@@ -9,6 +9,7 @@ import '../../model/model.dart';
 import '../../widget/common/Loading.dart';
 
 import '../../data/dummydata.dart';
+import 'P03INCOMING_GWGAS_CONSOLEbox/P03INCOMING_GWGAS_CONSOLEbox.dart';
 import 'P03INCOMINGvar_GWGAS.dart';
 
 //------------------------------------
@@ -355,7 +356,7 @@ class MyData extends DataTableSource {
           //     // ConsoleBox(data, _list01),
           //     );
 
-          // P03INCOMING_GWGAS_ConsoleBoxBODY(data, context);
+          P03INCOMING_GWGAS_ConsoleBoxBODY(data, context);
           notifyListeners();
         },
         cells: [

@@ -44,11 +44,12 @@ class P02INCOMING_BP12GASget extends Bloc<DataSetEvent, List<dataset>> {
       data: {
         "IMP_PRCTR": "24000",
         "IMP_WERKS": "2100",
-        // "LAST_DATE":
-        //     "${zreoover(now.day.toString())}-${zreoover(now.month.toString())}-${now.year}",
-        // "LAST_TIME": "${now.hour}:${now.minute}:${now.second}",
-        "LAST_DATE": "01-04-2024",
-        "LAST_TIME": "19:00:08"
+        "LAST_DATE":
+            "${zreoover(now.day.toString())}-${zreoover(now.month.toString())}-${now.year}",
+        "LAST_TIME":
+            "${zreoover(now.hour.toString())}:${zreoover(now.minute.toString())}:00",
+        // "LAST_DATE": "01-04-2024",
+        // "LAST_TIME": "19:00:08"
       },
     );
     Navigator.pop(P02INCOMING_BP12GASmaincontext);

@@ -62,7 +62,7 @@ class P04INCOMING_BP12PHgetlist
           var INCOMMINGlist = databuff['PATTERN'][0]['INCOMMING'];
           if (INCOMMINGlist.length > 0) {
             stateoutput
-                .add(listdataincomming(ITEMname: "START", ITEMcode: "-"));
+                .add(listdataincomming(ITEMname: "Ready", ITEMcode: "-"));
           } else {
             stateoutput
                 .add(listdataincomming(ITEMname: "NO PATTERN", ITEMcode: "-"));

@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/BlocEvent/04-01-P04INCOMING_BP12PHget.dart';
+import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../bloc/Cubit/Rebuild.dart';
 import '../../data/Base64Img.dart';
 import '../../data/global.dart';
+import '../../mainBody.dart';
 import '../../model/model.dart';
 import '../../widget/common/Loading.dart';
 
 import '../../data/dummydata.dart';
+import '../page1.dart';
 import 'P04INCOMING_BP12PH_CONSOLEbox/P04INCOMING_BP12PH_CONSOLEbox.dart';
 import 'P04INCOMINGvar_BP12PH.dart';
 
@@ -113,29 +116,71 @@ class _TableBodyState extends State<TableBody> {
           width: 1200,
           child: Column(
             children: [
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.search),
-                  title: TextField(
-                      controller: controller,
-                      decoration: const InputDecoration(
-                          hintText: 'Search', border: InputBorder.none),
-                      onChanged: (value) {
-                        setState(() {
-                          _searchResult = value;
-                        });
-                      }),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.cancel),
-                    onPressed: () {
-                      setState(() {
-                        controller.clear();
-                        _searchResult = '';
-                      });
-                    },
-                  ),
-                ),
+              const SizedBox(
+                height: 10,
               ),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      CuPage = Page1();
+                      MainBodyContext.read<ChangePage_Bloc>()
+                          .add(ChangePage_nodrower());
+                    },
+                    child: SizedBox(
+                      height: 60,
+                      width: 300,
+                      child: Center(
+                        child: Row(
+                          children: [
+                            const Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  weight: 100,
+                                  size: 40,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 8,
+                              child: Text(
+                                "BACK",
+                                style: TextStyle(fontSize: 28),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // Card(
+              //   child: ListTile(
+              //     leading: const Icon(Icons.search),
+              //     title: TextField(
+              //         controller: controller,
+              //         decoration: const InputDecoration(
+              //             hintText: 'Search', border: InputBorder.none),
+              //         onChanged: (value) {
+              //           setState(() {
+              //             _searchResult = value;
+              //           });
+              //         }),
+              //     trailing: IconButton(
+              //       icon: const Icon(Icons.cancel),
+              //       onPressed: () {
+              //         setState(() {
+              //           controller.clear();
+              //           _searchResult = '';
+              //         });
+              //       },
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 10,
               ),

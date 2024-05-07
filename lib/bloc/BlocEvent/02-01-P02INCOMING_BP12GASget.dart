@@ -12,7 +12,7 @@ import '../../widget/common/Loading.dart';
 String server = "http://172.23.10.40:16714/";
 //172.23.10.39
 
-DateTime now = new DateTime.now();
+// DateTime now = new DateTime.now();
 
 /// Event being processed by [CounterBloc].
 abstract class DataSetEvent {}
@@ -37,6 +37,7 @@ class P02INCOMING_BP12GASget extends Bloc<DataSetEvent, List<dataset>> {
   Future<void> _getdata(
       List<dataset> toAdd, Emitter<List<dataset>> emit) async {
     FreeLoading(P02INCOMING_BP12GASmaincontext);
+    DateTime now = DateTime.now().subtract(const Duration(days: 10));
 
     // print(zreoover(now.day.toString()));
     final response = await Dio().post(

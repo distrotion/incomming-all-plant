@@ -54,6 +54,7 @@ class P06INCOMING_HESISNgetstatus
       data: {
         "CHARG": P06INCOMINGvar_HESISN_INCOMINGDATAoutput.CHARGnow,
         "CUST_LOT": P06INCOMINGvar_HESISN_INCOMINGDATAoutput.CUST_LOTnow,
+        "MATNR": P06INCOMINGvar_HESISN_INCOMINGDATAoutput.MATNRnow,
       },
     );
 

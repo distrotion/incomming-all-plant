@@ -8,9 +8,7 @@ import '../../data/Base64Img.dart';
 import '../../data/global.dart';
 import '../../mainBody.dart';
 import '../../model/model.dart';
-import '../../widget/common/Loading.dart';
 
-import '../../data/dummydata.dart';
 import '../page1.dart';
 import 'P04INCOMING_BP12PH_CONSOLEbox/P04INCOMING_BP12PH_CONSOLEbox.dart';
 import 'P04INCOMINGvar_BP12PH.dart';

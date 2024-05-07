@@ -54,6 +54,7 @@ class P05INCOMING_HESGASgetstatus
       data: {
         "CHARG": P05INCOMINGvar_HESGAS_INCOMINGDATAoutput.CHARGnow,
         "CUST_LOT": P05INCOMINGvar_HESGAS_INCOMINGDATAoutput.CUST_LOTnow,
+        "MATNR": P05INCOMINGvar_HESGAS_INCOMINGDATAoutput.MATNRnow,
       },
     );
 

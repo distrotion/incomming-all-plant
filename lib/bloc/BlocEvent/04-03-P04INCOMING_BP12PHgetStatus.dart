@@ -54,6 +54,7 @@ class P04INCOMING_BP12PHgetstatus
       data: {
         "CHARG": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.CHARGnow,
         "CUST_LOT": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.CUST_LOTnow,
+        "MATNR": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MATNRnow,
       },
     );
 

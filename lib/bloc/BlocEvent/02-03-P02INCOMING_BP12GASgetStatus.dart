@@ -55,6 +55,7 @@ class P02INCOMING_BP12GASgetstatus
       data: {
         "CHARG": P02INCOMINGvar_BP12GAS_INCOMINGDATAoutput.CHARGnow,
         "CUST_LOT": P02INCOMINGvar_BP12GAS_INCOMINGDATAoutput.CUST_LOTnow,
+        "MATNR": P02INCOMINGvar_BP12GAS_INCOMINGDATAoutput.MATNRnow,
       },
     );
 

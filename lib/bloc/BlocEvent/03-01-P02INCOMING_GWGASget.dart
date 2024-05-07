@@ -12,8 +12,6 @@ import '../../widget/common/Loading.dart';
 String server = "http://172.23.10.40:16714/";
 //172.23.10.39
 
-DateTime now = new DateTime.now();
-
 /// Event being processed by [CounterBloc].
 abstract class DataSetEvent {}
 
@@ -37,6 +35,7 @@ class P03INCOMING_GWGASget extends Bloc<DataSetEvent, List<dataset>> {
   Future<void> _getdata(
       List<dataset> toAdd, Emitter<List<dataset>> emit) async {
     FreeLoading(P03INCOMING_GWGASmaincontext);
+    DateTime now = DateTime.now().subtract(const Duration(days: 10));
 
     // print(zreoover(now.day.toString()));
     final response = await Dio().post(

@@ -55,6 +55,7 @@ class P03INCOMING_GWGASgetstatus
       data: {
         "CHARG": P03INCOMINGvar_GWGAS_INCOMINGDATAoutput.CHARGnow,
         "CUST_LOT": P03INCOMINGvar_GWGAS_INCOMINGDATAoutput.CUST_LOTnow,
+        "MATNR": P03INCOMINGvar_GWGAS_INCOMINGDATAoutput.MATNRnow,
       },
     );
 

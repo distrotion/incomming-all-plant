@@ -10,6 +10,8 @@ import '../page3.dart';
 import '../page4.dart';
 import '../page5.dart';
 import '../page6.dart';
+import '../page7.dart';
+import '../page8.dart';
 
 class P01CENTERSELECTmain extends StatefulWidget {
   const P01CENTERSELECTmain({Key? key}) : super(key: key);
@@ -29,7 +31,9 @@ class _P01CENTERSELECTmainState extends State<P01CENTERSELECTmain> {
                 USERDATA.LOCATIONList[i].replaceAll(" ", "") == 'BP12-PH' ||
                 USERDATA.LOCATIONList[i].replaceAll(" ", "") == 'HES-GAS' ||
                 USERDATA.LOCATIONList[i].replaceAll(" ", "") == 'HES-ISN' ||
-                USERDATA.LOCATIONList[i].replaceAll(" ", "") == 'GW-GAS') ...[
+                USERDATA.LOCATIONList[i].replaceAll(" ", "") == 'GW-GAS' ||
+                USERDATA.LOCATIONList[i].replaceAll(" ", "") == 'HES-PAL' ||
+                USERDATA.LOCATIONList[i].replaceAll(" ", "") == 'HES-PH') ...[
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
@@ -58,6 +62,16 @@ class _P01CENTERSELECTmainState extends State<P01CENTERSELECTmain> {
                     } else if (USERDATA.LOCATIONList[i].replaceAll(" ", "") ==
                         "HES-ISN") {
                       CuPage = Page6();
+                      MainBodyContext.read<ChangePage_Bloc>()
+                          .add(ChangePage_nodrower());
+                    } else if (USERDATA.LOCATIONList[i].replaceAll(" ", "") ==
+                        "HES-PH") {
+                      CuPage = Page7();
+                      MainBodyContext.read<ChangePage_Bloc>()
+                          .add(ChangePage_nodrower());
+                    } else if (USERDATA.LOCATIONList[i].replaceAll(" ", "") ==
+                        "HES-PAL") {
+                      CuPage = Page8();
                       MainBodyContext.read<ChangePage_Bloc>()
                           .add(ChangePage_nodrower());
                     }

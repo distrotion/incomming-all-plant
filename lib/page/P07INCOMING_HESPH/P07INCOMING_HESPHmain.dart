@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/BlocEvent/02-01-P02INCOMING_BP12GASget.dart';
+import '../../bloc/BlocEvent/07-01-P07INCOMING_HESPHget.dart';
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../bloc/Cubit/Rebuild.dart';
 import '../../data/Base64Img.dart';
@@ -10,19 +10,20 @@ import '../../mainBody.dart';
 import '../../model/model.dart';
 import '../../widget/common/Loading.dart';
 
-import '../page1.dart';
-import 'P02INCOMING_BP12GAS_CONSOLEbox/P02INCOMING_BP12GAS_CONSOLEbox.dart';
 import '../../data/dummydata.dart';
-import 'P02INCOMINGvar_BP12GAS.dart';
+import '../page1.dart';
+
+import 'P07INCOMING_HESPH_CONSOLEbox/P07INCOMING_HESPH_CONSOLEbox.dart';
+import 'P07INCOMINGvar_HESPH.dart';
 
 //------------------------------------
 
-late BuildContext P02INCOMING_BP12GASmaincontext;
+late BuildContext P07INCOMING_HESPHmaincontext;
 String _searchResult = '';
 
-class P02INCOMING_BP12GASmain extends StatelessWidget {
+class P07INCOMING_HESPHmain extends StatelessWidget {
   /// {@macro counter_page}
-  P02INCOMING_BP12GASmain({Key? key, this.data}) : super(key: key);
+  P07INCOMING_HESPHmain({Key? key, this.data}) : super(key: key);
   List<dataset>? data;
   @override
   Widget build(BuildContext context) {
@@ -69,13 +70,13 @@ class _TableBodyState extends State<TableBody> {
   void initState() {
     super.initState();
 
-    P02INCOMINGvar_BP12GAS_INCOMINGDATAoutput.UserNO = USERDATA.ID;
-    context.read<P02INCOMING_BP12GASget>().add(GetDataPressed());
+    P07INCOMINGvar_HESPH_INCOMINGDATAoutput.UserNO = USERDATA.ID;
+    context.read<P07INCOMING_HESPHget>().add(GetDataPressed());
   }
 
   @override
   Widget build(BuildContext context) {
-    P02INCOMING_BP12GASmaincontext = context;
+    P07INCOMING_HESPHmaincontext = context;
 
     List<dataset> datain = widget.data ?? [];
     // List<dataset> datain = data_test;
@@ -192,7 +193,7 @@ class _TableBodyState extends State<TableBody> {
                     header: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('INCOMING BP12 GAS'),
+                        const Text('INCOMING HES PH'),
                         Row(
                           children: [
                             // ElevatedButton(
@@ -209,7 +210,7 @@ class _TableBodyState extends State<TableBody> {
                             ElevatedButton(
                               onPressed: () {
                                 context
-                                    .read<P02INCOMING_BP12GASget>()
+                                    .read<P07INCOMING_HESPHget>()
                                     .add(GetDataPressed());
                               },
                               child: const Icon(
@@ -362,29 +363,29 @@ class MyData extends DataTableSource {
 
           //-----------
 
-          P02INCOMINGvar_BP12GAS.ItemNow = 0;
-          P02INCOMINGvar_BP12GAS.modeNOGOOD = false;
-          P02INCOMINGvar_BP12GAS.ItemName = '';
-          P02INCOMINGvar_BP12GAS.statusNow = '';
-          P02INCOMINGvar_BP12GAS.specialAccStatusNow = '';
-          P02INCOMINGvar_BP12GAS.specialAccCOMMENTNow = '';
-          P02INCOMINGvar_BP12GAS.specialAccPicNow = '';
-          P02INCOMINGvar_BP12GAS.confirmPass = '';
-          P02INCOMINGvar_BP12GAS.wait = '';
-          P02INCOMINGvar_BP12GAS.PassText = '';
-          P02INCOMINGvar_BP12GAS.ListITEM = [];
+          P07INCOMINGvar_HESPH.ItemNow = 0;
+          P07INCOMINGvar_HESPH.modeNOGOOD = false;
+          P07INCOMINGvar_HESPH.ItemName = '';
+          P07INCOMINGvar_HESPH.statusNow = '';
+          P07INCOMINGvar_HESPH.specialAccStatusNow = '';
+          P07INCOMINGvar_HESPH.specialAccCOMMENTNow = '';
+          P07INCOMINGvar_HESPH.specialAccPicNow = '';
+          P07INCOMINGvar_HESPH.confirmPass = '';
+          P07INCOMINGvar_HESPH.wait = '';
+          P07INCOMINGvar_HESPH.PassText = '';
+          P07INCOMINGvar_HESPH.ListITEM = [];
 
-          P02INCOMINGvar_BP12GAS_NOGOODcon.NoGoodPage = 1;
-          P02INCOMINGvar_BP12GAS_NOGOODcon.PiecesDropdownSelected = '1';
-          P02INCOMINGvar_BP12GAS_NOGOODcon.yesno = 0;
-          P02INCOMINGvar_BP12GAS_NOGOODcon.undercontrol = false;
-          P02INCOMINGvar_BP12GAS_NOGOODcon.SpacialAccText = '';
-          P02INCOMINGvar_BP12GAS_NOGOODcon.attper = 0;
-          P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic01 = imgw;
-          P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic02 = imgw;
-          P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic03 = imgw;
-          P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic04 = imgw;
-          P02INCOMINGvar_BP12GAS_NOGOODcon.base64pic05 = imgw;
+          P07INCOMINGvar_HESPH_NOGOODcon.NoGoodPage = 1;
+          P07INCOMINGvar_HESPH_NOGOODcon.PiecesDropdownSelected = '1';
+          P07INCOMINGvar_HESPH_NOGOODcon.yesno = 0;
+          P07INCOMINGvar_HESPH_NOGOODcon.undercontrol = false;
+          P07INCOMINGvar_HESPH_NOGOODcon.SpacialAccText = '';
+          P07INCOMINGvar_HESPH_NOGOODcon.attper = 0;
+          P07INCOMINGvar_HESPH_NOGOODcon.base64pic01 = imgw;
+          P07INCOMINGvar_HESPH_NOGOODcon.base64pic02 = imgw;
+          P07INCOMINGvar_HESPH_NOGOODcon.base64pic03 = imgw;
+          P07INCOMINGvar_HESPH_NOGOODcon.base64pic04 = imgw;
+          P07INCOMINGvar_HESPH_NOGOODcon.base64pic05 = imgw;
 
           //-----------
           // _selectedCount += value! ? 1 : -1;
@@ -401,7 +402,7 @@ class MyData extends DataTableSource {
           //     // ConsoleBox(data, _list01),
           //     );
 
-          P02INCOMING_BP12GAS_ConsoleBoxBODY(data, context);
+          P07INCOMING_HESPH_ConsoleBoxBODY(data, context);
           notifyListeners();
         },
         cells: [

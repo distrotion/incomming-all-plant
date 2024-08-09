@@ -8,8 +8,9 @@ import '../../page/P04INCOMING_PB12PH/P04INCOMING_BP12PHmain.dart';
 import '../../widget/common/Loading.dart';
 
 // String server = 'http://localhost:10000/';
-// String server = GLOserver;
-String server = "http://172.23.10.40:16714/";
+String server = GLOserver;
+// String server = "http://172.23.10.40:16714/";
+// String server = "http://127.0.0.1:16714/";
 //172.23.10.39
 
 // DateTime now = new DateTime.now();
@@ -40,7 +41,7 @@ class P04INCOMING_BP12PHget extends Bloc<DataSetEvent, List<dataset>> {
     DateTime now = DateTime.now().subtract(const Duration(days: 10));
     // print(zreoover(now.day.toString()));
     final response = await Dio().post(
-      server + "getsap/getincomming",
+      server + "getsap/getincomming_2",
       data: {
         "IMP_PRCTR": "21000",
         "IMP_WERKS": "2100",

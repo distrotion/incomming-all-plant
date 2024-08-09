@@ -3,9 +3,7 @@
 //   static String CHARGnow = '';
 // }
 
-import '../../widget/box/05-inputdata.dart';
-
-class P04INCOMINGvar_BP12PH {
+class P07INCOMINGvar_HESPH {
   static int ItemNow = 0;
   static bool modeNOGOOD = false;
   static String ItemName = '';
@@ -17,12 +15,9 @@ class P04INCOMINGvar_BP12PH {
   static String wait = '';
   static String PassText = '';
   static List<String> ListITEM = [];
-  static String MATNRnowMEM = '';
-  static String CHARGnowMEM = '';
 }
 
-class P04INCOMINGvar_BP12PH_INCOMINGDATAoutput {
-  static bool undercontrol = false;
+class P07INCOMINGvar_HESPH_INCOMINGDATAoutput {
   static String MATNRnow = '';
   static String CHARGnow = '';
   static String MBLNRnow = '';
@@ -46,13 +41,9 @@ class P04INCOMINGvar_BP12PH_INCOMINGDATAoutput {
   static String ITEMspecialAccCOMMENTNow = '';
 
   static String PiecesDropdownSelected = '';
-
-  static String DATAINPUT = '';
-  static List<datainwait> datainlist = [];
-  static List<List<datainwait>> setofdatainlist = [];
 }
 
-class P04INCOMINGvar_BP12PH_NOGOODcon {
+class P07INCOMINGvar_HESPH_NOGOODcon {
   static int NoGoodPage = 1;
   static String PiecesDropdownSelected = '1';
   static int yesno = 0;

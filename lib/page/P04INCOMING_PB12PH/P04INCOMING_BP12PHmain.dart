@@ -5,6 +5,7 @@ import '../../bloc/BlocEvent/04-01-P04INCOMING_BP12PHget.dart';
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../bloc/Cubit/Rebuild.dart';
 import '../../data/Base64Img.dart';
+import '../../data/dummydata.dart';
 import '../../data/global.dart';
 import '../../mainBody.dart';
 import '../../model/model.dart';
@@ -78,22 +79,22 @@ class _TableBodyState extends State<TableBody> {
     List<dataset> datain = widget.data ?? [];
     // List<dataset> datain = data_test;
 
-    // if (_searchResult != '') {
-    //   List<dataset> _data_exp = [];
+    if (_searchResult != '') {
+      List<dataset> _data_exp = [];
 
-    //   for (int i = 0; i < datain.length; i++) {
-    //     if (datain[i].f01.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f02.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f03.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f04.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f05.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f06.toLowerCase().contains(_searchResult)) {
-    //       _data_exp.add(datain[i]);
-    //     }
-    //   }
+      for (int i = 0; i < datain.length; i++) {
+        if (datain[i].f01.toLowerCase().contains(_searchResult) ||
+            datain[i].f02.toLowerCase().contains(_searchResult) ||
+            datain[i].f03.toLowerCase().contains(_searchResult) ||
+            datain[i].f04.toLowerCase().contains(_searchResult) ||
+            datain[i].f05.toLowerCase().contains(_searchResult) ||
+            datain[i].f06.toLowerCase().contains(_searchResult)) {
+          _data_exp.add(datain[i]);
+        }
+      }
 
-    //   datain = _data_exp;
-    // }
+      datain = _data_exp;
+    }
 
     MyData _data = MyData(context, datain);
 
@@ -125,13 +126,13 @@ class _TableBodyState extends State<TableBody> {
                       MainBodyContext.read<ChangePage_Bloc>()
                           .add(ChangePage_nodrower());
                     },
-                    child: SizedBox(
+                    child: const SizedBox(
                       height: 60,
                       width: 300,
                       child: Center(
                         child: Row(
                           children: [
-                            const Expanded(
+                            Expanded(
                               flex: 1,
                               child: Padding(
                                 padding: EdgeInsets.only(right: 20),
@@ -156,29 +157,29 @@ class _TableBodyState extends State<TableBody> {
                   ),
                 ],
               ),
-              // Card(
-              //   child: ListTile(
-              //     leading: const Icon(Icons.search),
-              //     title: TextField(
-              //         controller: controller,
-              //         decoration: const InputDecoration(
-              //             hintText: 'Search', border: InputBorder.none),
-              //         onChanged: (value) {
-              //           setState(() {
-              //             _searchResult = value;
-              //           });
-              //         }),
-              //     trailing: IconButton(
-              //       icon: const Icon(Icons.cancel),
-              //       onPressed: () {
-              //         setState(() {
-              //           controller.clear();
-              //           _searchResult = '';
-              //         });
-              //       },
-              //     ),
-              //   ),
-              // ),
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.search),
+                  title: TextField(
+                      controller: controller,
+                      decoration: const InputDecoration(
+                          hintText: 'Search', border: InputBorder.none),
+                      onChanged: (value) {
+                        setState(() {
+                          _searchResult = value;
+                        });
+                      }),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.cancel),
+                    onPressed: () {
+                      setState(() {
+                        controller.clear();
+                        _searchResult = '';
+                      });
+                    },
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -383,6 +384,20 @@ class MyData extends DataTableSource {
           P04INCOMINGvar_BP12PH_NOGOODcon.base64pic03 = imgw;
           P04INCOMINGvar_BP12PH_NOGOODcon.base64pic04 = imgw;
           P04INCOMINGvar_BP12PH_NOGOODcon.base64pic05 = imgw;
+
+          P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT = '';
+
+          print(P04INCOMINGvar_BP12PH.MATNRnowMEM);
+          print(P04INCOMINGvar_BP12PH.CHARGnowMEM);
+          print(data.f01);
+          print(data.f05);
+
+          if (P04INCOMINGvar_BP12PH.MATNRnowMEM == data.f01 &&
+              P04INCOMINGvar_BP12PH.CHARGnowMEM == data.f05) {
+          } else {
+            P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.datainlist = [];
+            P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.setofdatainlist = [];
+          }
 
           //-----------
           // _selectedCount += value! ? 1 : -1;

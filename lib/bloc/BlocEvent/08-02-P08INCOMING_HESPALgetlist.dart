@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import '../../data/global.dart';
 import '../../model/model.dart';
 
-import '../../page/P04INCOMING_PB12PH/P04INCOMINGvar_BP12PH.dart';
+import '../../page/P08INCOMING_HESPAL/P08INCOMINGvar_HESPAL.dart';
 import '../../widget/common/Loading.dart';
 
 // String server = 'http://localhost:10000/';
@@ -15,48 +15,48 @@ String server = GLOserver;
 DateTime now = new DateTime.now();
 
 /// Event being processed by [CounterBloc].
-abstract class P04INCOMING_BP12PHgetlistEvent {}
+abstract class P08INCOMING_HESPALgetlistEvent {}
 
 /// Notifies bloc to increment state.
-class GetDataPressed extends P04INCOMING_BP12PHgetlistEvent {}
+class GetDataPressed extends P08INCOMING_HESPALgetlistEvent {}
 
-class FlushITDataPressed extends P04INCOMING_BP12PHgetlistEvent {}
+class FlushITDataPressed extends P08INCOMING_HESPALgetlistEvent {}
 
-class CounterValue extends P04INCOMING_BP12PHgetlist {
+class CounterValue extends P08INCOMING_HESPALgetlist {
   final int value;
   CounterValue(this.value);
 }
 
-class P04INCOMING_BP12PHgetlist
-    extends Bloc<P04INCOMING_BP12PHgetlistEvent, List<listdataincomming>> {
+class P08INCOMING_HESPALgetlist
+    extends Bloc<P08INCOMING_HESPALgetlistEvent, List<listdataincomming>> {
   /// {@macro counter_bloc}
-  P04INCOMING_BP12PHgetlist() : super(<listdataincomming>[]) {
+  P08INCOMING_HESPALgetlist() : super(<listdataincomming>[]) {
     on<GetDataPressed>((event, emit) {
       return _getdata([], emit);
     });
   }
   Future<void> _getdata(List<listdataincomming> toAdd,
       Emitter<List<listdataincomming>> emit) async {
-    // FreeLoading(P04INCOMING_BP12PHmaincontext);
+    // FreeLoading(P08INCOMING_HESPALmaincontext);
 
     // print(zreoover(now.day.toString()));
     final response = await Dio().post(
-      server + "03BP12PH/getmaster",
+      server + "10HESPAL/getmaster",
       data: {
-        "MATNR": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MATNRnow,
+        "MATNR": P08INCOMINGvar_HESPAL_INCOMINGDATAoutput.MATNRnow,
       },
     );
 
     List<listdataincomming> stateoutput = [];
     if (response.statusCode == 200) {
-      // Navigator.pop(P04INCOMING_BP12PHmaincontext);
+      // Navigator.pop(P08INCOMING_HESPALmaincontext);
       // var databuff = jsonDecode(response.body);
       var databuff = response.data;
 
       // print(databuff);
       if (databuff['PATTERN'] != null) {
         if (databuff['PATTERN'].length > 0) {
-          // print(databuff['PATTERN'][0]['INCOMMING']['SPECIFICATIONve']);
+          // print(databuff['ITEMS']);
           // print(databuff['PATTERN'][0]['INCOMMING'].length);
           var ITEMnamelist = databuff['ITEMS'];
           var INCOMMINGlist = databuff['PATTERN'][0]['INCOMMING'];
@@ -71,7 +71,7 @@ class P04INCOMING_BP12PHgetlist
           for (var i = 0; i < INCOMMINGlist.length; i++) {
             listitemss.add(INCOMMINGlist[i]['ITEMs']);
           }
-          P04INCOMINGvar_BP12PH.ListITEM = listitemss;
+          P08INCOMINGvar_HESPAL.ListITEM = listitemss;
           for (var i = 0; i < INCOMMINGlist.length; i++) {
             for (var j = 0; j < ITEMnamelist.length; j++) {
               if (ITEMnamelist[j]['masterID'].toString() ==
@@ -83,10 +83,8 @@ class P04INCOMING_BP12PHgetlist
                 stateoutput.add(listdataincomming(
                   ITEMname: ITEMnamelist[j]['ITEMs'],
                   ITEMcode: ITEMnamelist[j]['masterID'],
-                  point: INCOMMINGlist[i]['POINT'],
                   pcs: INCOMMINGlist[i]['PCS'],
                   fre: INCOMMINGlist[i]['FREQUENCY'],
-                  RESULTFORMAT: INCOMMINGlist[i]['RESULTFORMAT'],
                 ));
               }
             }
@@ -98,7 +96,7 @@ class P04INCOMING_BP12PHgetlist
 
       emit(stateoutput);
     } else {
-      // Navigator.pop(P04INCOMING_BP12PHmaincontext);
+      // Navigator.pop(P08INCOMING_HESPALmaincontext);
       print("where is my server");
       //stateoutput = data_test
       stateoutput = [];
@@ -123,16 +121,12 @@ class listdataincomming {
     this.ITEMname = '',
     this.ITEMcode = '',
     this.pcs = '',
-    this.point = '',
     this.fre = '',
     this.PIC = '',
-    this.RESULTFORMAT = '',
   });
   String ITEMname;
   String ITEMcode;
   String pcs;
-  String point;
   String fre;
   String PIC;
-  String RESULTFORMAT;
 }

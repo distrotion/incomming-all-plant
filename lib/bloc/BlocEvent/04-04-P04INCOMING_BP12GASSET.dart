@@ -27,6 +27,12 @@ class SETDataPressedST extends P04INCOMING_BP12PHSETEvent {
   String ITEMcode;
 }
 
+class SETDataPressedSTWDATA extends P04INCOMING_BP12PHSETEvent {
+  SETDataPressedSTWDATA({required this.ITEMcode});
+
+  String ITEMcode;
+}
+
 class SETDataPressedRJ extends P04INCOMING_BP12PHSETEvent {
   SETDataPressedRJ({required this.ITEMcode});
 
@@ -51,6 +57,9 @@ class P04INCOMING_BP12PHSET extends Bloc<P04INCOMING_BP12PHSETEvent, String> {
   P04INCOMING_BP12PHSET() : super('') {
     on<SETDataPressedST>((event, emit) {
       return _SETDataPressedST(event.ITEMcode, emit);
+    });
+    on<SETDataPressedSTWDATA>((event, emit) {
+      return _SETDataPressedSTWDATA(event.ITEMcode, emit);
     });
     on<SETDataPressedRJ>((event, emit) {
       return _SETDataPressedRJ(event.ITEMcode, emit);
@@ -89,6 +98,7 @@ class P04INCOMING_BP12PHSET extends Bloc<P04INCOMING_BP12PHSETEvent, String> {
         "ITEMcode": toAdd,
         "ITEM": P04INCOMINGvar_BP12PH.ItemName,
         "ListITEM": P04INCOMINGvar_BP12PH.ListITEM,
+        "DATAINPUT": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT,
         "ITEMstatus": "GOOD",
         "ITEMspecialAccStatus": '',
         "ITEMspecialAccCOMMENT": '',
@@ -99,6 +109,93 @@ class P04INCOMING_BP12PHSET extends Bloc<P04INCOMING_BP12PHSETEvent, String> {
         "ITEMspecialAccPic04": '',
         "ITEMspecialAccPic05": '',
         "ITEMsPiecesSelected": '',
+      },
+    );
+    Navigator.pop(P04INCOMING_BP12PHmaincontext);
+
+    String stateoutput = '';
+    if (response.statusCode == 200) {
+      // Navigator.pop(P04INCOMING_BP12PHmaincontext);
+      // var databuff = jsonDecode(response.body);
+      var databuff = response.data;
+
+      print(databuff);
+
+      //stateoutput = data_test
+    } else {
+      // Navigator.pop(P04INCOMING_BP12PHmaincontext);
+      print("where is my server");
+      //stateoutput = data_test
+      stateoutput = '';
+    }
+
+    P04INCOMING_BP12PHmaincontextbox.read<P04INCOMING_BP12PHgetstatus>()
+        .add(GetDataPressedST(
+      ITEMcode: toAdd,
+    ));
+    emit(stateoutput);
+  }
+
+  Future<void> _SETDataPressedSTWDATA(
+      String toAdd, Emitter<String> emit) async {
+    FreeLoading(P04INCOMING_BP12PHmaincontext);
+
+    // print(zreoover(now.day.toString()));
+    // print(P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.setofdatainlist);
+    List<List<String>> DATAOUT = [];
+
+    for (var i = 0;
+        i < P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.setofdatainlist.length;
+        i++) {
+      DATAOUT.add([]);
+      for (var j = 0;
+          j <
+              P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
+                  .setofdatainlist[i].length;
+          j++) {
+        DATAOUT[i].add(P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
+            .setofdatainlist[i][j].VALUE);
+      }
+    }
+
+    // print(DATAOUT);
+
+    final response = await Dio().post(
+      server + "03BP12PH/SETgoodandDATA",
+      data: {
+        "MATNR": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MATNRnow,
+        "CHARG": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.CHARGnow,
+        "MBLNR": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MBLNRnow,
+        "BWART": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.BWARTnow,
+        "MENGE": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MENGEnow,
+        "MEINS": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MEINSnow,
+        "MAT_FG": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MAT_FGnow,
+        "KUNNR": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.KUNNRnow,
+        "SORTL": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.SORTLnow,
+        "NAME1": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.NAME1now,
+        "CUST_LOT": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.CUST_LOTnow,
+        "PART_NM": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.PART_NMnow,
+        "PART_NO": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.PART_NOnow,
+        "PROCESS": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.PROCESSnow,
+        "OLDMAT_CP": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.OLDMAT_CPnow,
+        "STATUS": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.STATUSnow,
+        "UserNO": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.UserNO,
+        //
+        "ITEMcode": toAdd,
+        "ITEM": P04INCOMINGvar_BP12PH.ItemName,
+        "ListITEM": P04INCOMINGvar_BP12PH.ListITEM,
+        "DATAINPUT": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT,
+        "ITEMstatus": "GOOD",
+        "ITEMspecialAccStatus": '',
+        "ITEMspecialAccCOMMENT": '',
+        "ITEMspecialAccPic": '',
+        "ITEMspecialAccPic01": '',
+        "ITEMspecialAccPic02": '',
+        "ITEMspecialAccPic03": '',
+        "ITEMspecialAccPic04": '',
+        "ITEMspecialAccPic05": '',
+        "ITEMsPiecesSelected": '',
+        "DATASET": DATAOUT
       },
     );
     Navigator.pop(P04INCOMING_BP12PHmaincontext);
@@ -155,6 +252,7 @@ class P04INCOMING_BP12PHSET extends Bloc<P04INCOMING_BP12PHSETEvent, String> {
         "ITEMcode": toAdd,
         "ITEM": P04INCOMINGvar_BP12PH.ItemName,
         "ListITEM": P04INCOMINGvar_BP12PH.ListITEM,
+        "DATAINPUT": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT,
         "ITEMstatus": "reject",
         "ITEMspecialAccStatus": '',
         "ITEMspecialAccCOMMENT": '',
@@ -221,6 +319,7 @@ class P04INCOMING_BP12PHSET extends Bloc<P04INCOMING_BP12PHSETEvent, String> {
         "ITEMcode": toAdd,
         "ITEM": P04INCOMINGvar_BP12PH.ItemName,
         "ListITEM": P04INCOMINGvar_BP12PH.ListITEM,
+        "DATAINPUT": P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT,
         "ITEMstatus": "WAIT",
         "ITEMspecialAccStatus": P04INCOMINGvar_BP12PH_NOGOODcon.yesno,
         "ITEMspecialAccCOMMENT": P04INCOMINGvar_BP12PH_NOGOODcon.SpacialAccText,

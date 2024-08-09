@@ -8,8 +8,9 @@ import '../../page/P03INCOMING_GWGAS/P03INCOMING_GWGASmain.dart';
 import '../../widget/common/Loading.dart';
 
 // String server = 'http://localhost:10000/';
-// String server = GLOserver;
-String server = "http://172.23.10.40:16714/";
+String server = GLOserver;
+// String server = "http://172.23.10.40:16714/";
+// String server = "http://127.0.0.1:16714/";
 //172.23.10.39
 
 /// Event being processed by [CounterBloc].
@@ -39,7 +40,7 @@ class P03INCOMING_GWGASget extends Bloc<DataSetEvent, List<dataset>> {
 
     // print(zreoover(now.day.toString()));
     final response = await Dio().post(
-      server + "getsap/getincomming",
+      server + "getsap/getincomming_2",
       data: {
         "IMP_PRCTR": "25000",
         "IMP_WERKS": "2200",
@@ -102,7 +103,7 @@ class P03INCOMING_GWGASget extends Bloc<DataSetEvent, List<dataset>> {
     }
     //------------------------
     final responseNEW = await Dio().post(
-      server + "getsap/getincomming",
+      server + "getsap/getincomming_2",
       data: {
         "IMP_PRCTR": "25700",
         "IMP_WERKS": "2200",

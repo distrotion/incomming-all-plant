@@ -80,22 +80,22 @@ class _TableBodyState extends State<TableBody> {
     List<dataset> datain = widget.data ?? [];
     // List<dataset> datain = data_test;
 
-    // if (_searchResult != '') {
-    //   List<dataset> _data_exp = [];
+    if (_searchResult != '') {
+      List<dataset> _data_exp = [];
 
-    //   for (int i = 0; i < datain.length; i++) {
-    //     if (datain[i].f01.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f02.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f03.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f04.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f05.toLowerCase().contains(_searchResult) ||
-    //         datain[i].f06.toLowerCase().contains(_searchResult)) {
-    //       _data_exp.add(datain[i]);
-    //     }
-    //   }
+      for (int i = 0; i < datain.length; i++) {
+        if (datain[i].f01.toLowerCase().contains(_searchResult) ||
+            datain[i].f02.toLowerCase().contains(_searchResult) ||
+            datain[i].f03.toLowerCase().contains(_searchResult) ||
+            datain[i].f04.toLowerCase().contains(_searchResult) ||
+            datain[i].f05.toLowerCase().contains(_searchResult) ||
+            datain[i].f06.toLowerCase().contains(_searchResult)) {
+          _data_exp.add(datain[i]);
+        }
+      }
 
-    //   datain = _data_exp;
-    // }
+      datain = _data_exp;
+    }
 
     MyData _data = MyData(context, datain);
 
@@ -158,29 +158,29 @@ class _TableBodyState extends State<TableBody> {
                   ),
                 ],
               ),
-              // Card(
-              //   child: ListTile(
-              //     leading: const Icon(Icons.search),
-              //     title: TextField(
-              //         controller: controller,
-              //         decoration: const InputDecoration(
-              //             hintText: 'Search', border: InputBorder.none),
-              //         onChanged: (value) {
-              //           setState(() {
-              //             _searchResult = value;
-              //           });
-              //         }),
-              //     trailing: IconButton(
-              //       icon: const Icon(Icons.cancel),
-              //       onPressed: () {
-              //         setState(() {
-              //           controller.clear();
-              //           _searchResult = '';
-              //         });
-              //       },
-              //     ),
-              //   ),
-              // ),
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.search),
+                  title: TextField(
+                      controller: controller,
+                      decoration: const InputDecoration(
+                          hintText: 'Search', border: InputBorder.none),
+                      onChanged: (value) {
+                        setState(() {
+                          _searchResult = value;
+                        });
+                      }),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.cancel),
+                    onPressed: () {
+                      setState(() {
+                        controller.clear();
+                        _searchResult = '';
+                      });
+                    },
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),

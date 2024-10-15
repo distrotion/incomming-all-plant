@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
+import '../../data/dummydata.dart';
 import '../../data/global.dart';
 import '../../model/model.dart';
 
@@ -95,7 +96,7 @@ class P04INCOMING_BP12PHget extends Bloc<DataSetEvent, List<dataset>> {
           f26: data_input[i]['Appearance for scratch_status'].toString(),
         ));
       }
-      //stateoutput = data_test
+      stateoutput = data_test;
       emit(stateoutput);
     } else {
       // Navigator.pop(P04INCOMING_BP12PHmaincontext);

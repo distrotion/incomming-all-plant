@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
+import '../../data/dummydata.dart';
 import '../../data/global.dart';
 import '../../model/model.dart';
 
-import '../../page/P07INCOMING_HESPH/P07INCOMING_HESPHmain.dart';
+import '../../page/P11INCOMING_BP12PAL/P11INCOMING_BP12PALmain.dart';
 import '../../widget/common/Loading.dart';
 
 // String server = 'http://localhost:10000/';
@@ -23,28 +24,28 @@ class GetDataPressed extends DataSetEvent {}
 
 class FlushITDataPressed extends DataSetEvent {}
 
-class CounterValue extends P07INCOMING_HESPHget {
+class CounterValue extends P11INCOMING_BP12PALget {
   final int value;
   CounterValue(this.value);
 }
 
-class P07INCOMING_HESPHget extends Bloc<DataSetEvent, List<dataset>> {
+class P11INCOMING_BP12PALget extends Bloc<DataSetEvent, List<dataset>> {
   /// {@macro counter_bloc}
-  P07INCOMING_HESPHget() : super(<dataset>[]) {
+  P11INCOMING_BP12PALget() : super(<dataset>[]) {
     on<GetDataPressed>((event, emit) {
       return _getdata([], emit);
     });
   }
   Future<void> _getdata(
       List<dataset> toAdd, Emitter<List<dataset>> emit) async {
-    FreeLoading(P07INCOMING_HESPHmaincontext);
+    FreeLoading(P11INCOMING_BP12PALmaincontext);
     DateTime now = DateTime.now().subtract(const Duration(days: 10));
     // print(zreoover(now.day.toString()));
     final response = await Dio().post(
       server + "getsap/getincomming_2",
       data: {
-        "IMP_PRCTR": "51000",
-        "IMP_WERKS": "2300",
+        "IMP_PRCTR": "62000",
+        "IMP_WERKS": "2200",
         "LAST_DATE":
             "${zreoover(now.day.toString())}-${zreoover(now.month.toString())}-${now.year}",
         "LAST_TIME":
@@ -53,16 +54,16 @@ class P07INCOMING_HESPHget extends Bloc<DataSetEvent, List<dataset>> {
         // "LAST_TIME": "19:00:08"
       },
     );
-    Navigator.pop(P07INCOMING_HESPHmaincontext);
+    Navigator.pop(P11INCOMING_BP12PALmaincontext);
 
     var data_input = [];
     List<dataset> stateoutput = [];
     if (response.statusCode == 200) {
-      // Navigator.pop(P07INCOMING_HESPHmaincontext);
+      // Navigator.pop(P11INCOMING_BP12PALmaincontext);
       // var databuff = jsonDecode(response.body);
       var databuff = response.data;
       data_input = databuff;
-      print(data_input);
+      // print(data_input);
 
       for (var i = 0; i < data_input.length; i++) {
         stateoutput.add(dataset(
@@ -95,10 +96,10 @@ class P07INCOMING_HESPHget extends Bloc<DataSetEvent, List<dataset>> {
           f26: data_input[i]['Appearance for scratch_status'].toString(),
         ));
       }
-      //stateoutput = data_test
+      stateoutput = data_test_KNG;
       emit(stateoutput);
     } else {
-      // Navigator.pop(P07INCOMING_HESPHmaincontext);
+      // Navigator.pop(P11INCOMING_BP12PALmaincontext);
       print("where is my server");
       //stateoutput = data_test
       stateoutput = [];

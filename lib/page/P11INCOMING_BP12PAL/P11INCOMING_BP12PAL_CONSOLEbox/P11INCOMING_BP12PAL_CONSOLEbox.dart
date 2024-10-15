@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:js' as js;
@@ -7,11 +6,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/BlocEvent/04-02-P04INCOMING_BP12PHgetlist.dart';
-import '../../../bloc/BlocEvent/04-03-P04INCOMING_BP12PHgetStatus.dart';
-
-import '../../../bloc/BlocEvent/04-04-P04INCOMING_BP12GASSET.dart';
-import '../../../bloc/Cubit/NotificationEvent.dart';
+import '../../../bloc/BlocEvent/11-02-P08INCOMING_PH12PALgetlist.dart';
+import '../../../bloc/BlocEvent/11-03-P08INCOMING_PH12PALgetStatus.dart';
+import '../../../bloc/BlocEvent/11-04-P08INCOMING_PH12PALSET.dart';
 import '../../../bloc/Cubit/Rebuild.dart';
 import '../../../data/Base64Img.dart';
 import '../../../model/model.dart';
@@ -21,12 +18,11 @@ import '../../../widget/box/00-nocon.dart';
 import '../../../widget/box/01-normal.dart';
 import '../../../widget/box/02-nogood.dart';
 import '../../../widget/box/03-waiting.dart';
-import '../../../widget/box/05-inputdata.dart';
-import '../P04INCOMINGvar_BP12PH.dart';
+import '../P11INCOMINGvar_BP12PAL.dart';
 
-late BuildContext P04INCOMING_BP12PHmaincontextbox;
+late BuildContext P11INCOMING_BP12PALmaincontextbox;
 
-void P04INCOMING_BP12PH_ConsoleBoxBODY(dataset data, BuildContext contextin) {
+void P11INCOMING_BP12PAL_ConsoleBoxBODY(dataset data, BuildContext contextin) {
   showDialog(
     context: contextin,
     barrierDismissible: true,
@@ -34,7 +30,7 @@ void P04INCOMING_BP12PH_ConsoleBoxBODY(dataset data, BuildContext contextin) {
       return Container(
         // color: Colors.blue,
         child: Dialog(
-            child: P04BlocBodySET(
+            child: P11BlocBodySET(
           data: data,
         )),
       );
@@ -42,9 +38,9 @@ void P04INCOMING_BP12PH_ConsoleBoxBODY(dataset data, BuildContext contextin) {
   );
 }
 
-class P04BlocBodySET extends StatelessWidget {
+class P11BlocBodySET extends StatelessWidget {
   /// {@macro counter_page}
-  P04BlocBodySET({
+  P11BlocBodySET({
     Key? key,
     required this.data,
   }) : super(key: key);
@@ -53,10 +49,10 @@ class P04BlocBodySET extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => P04INCOMING_BP12PHSET(),
-        child: BlocBuilder<P04INCOMING_BP12PHSET, String>(
+        create: (_) => P11INCOMING_BP12PALSET(),
+        child: BlocBuilder<P11INCOMING_BP12PALSET, String>(
           builder: (context, list) {
-            return P04BlocBody(
+            return P11BlocBody(
               data: data,
             );
           },
@@ -64,9 +60,9 @@ class P04BlocBodySET extends StatelessWidget {
   }
 }
 
-class P04BlocBody extends StatelessWidget {
+class P11BlocBody extends StatelessWidget {
   /// {@macro counter_page}
-  P04BlocBody({
+  P11BlocBody({
     Key? key,
     required this.data,
   }) : super(key: key);
@@ -75,10 +71,10 @@ class P04BlocBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => P04INCOMING_BP12PHgetlist(),
-        child: BlocBuilder<P04INCOMING_BP12PHgetlist, List<listdataincomming>>(
+        create: (_) => P11INCOMING_BP12PALgetlist(),
+        child: BlocBuilder<P11INCOMING_BP12PALgetlist, List<listdataincomming>>(
           builder: (context, list) {
-            return P04BlocBodyget(
+            return P11BlocBodyget(
               data: data,
               list: list,
             );
@@ -87,9 +83,9 @@ class P04BlocBody extends StatelessWidget {
   }
 }
 
-class P04BlocBodyget extends StatelessWidget {
+class P11BlocBodyget extends StatelessWidget {
   /// {@macro counter_page}
-  P04BlocBodyget({
+  P11BlocBodyget({
     Key? key,
     required this.data,
     this.list,
@@ -100,8 +96,8 @@ class P04BlocBodyget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) => P04INCOMING_BP12PHgetstatus(),
-        child: BlocBuilder<P04INCOMING_BP12PHgetstatus, statusinc>(
+        create: (_) => P11INCOMING_BP12PALgetstatus(),
+        child: BlocBuilder<P11INCOMING_BP12PALgetstatus, statusinc>(
           builder: (context, status) {
             return ConsoleBloc(
               data: data,
@@ -136,8 +132,6 @@ class ConsoleBloc extends StatelessWidget {
   }
 }
 
-late Timer _timer;
-
 class ConsoleWidget extends StatefulWidget {
   ConsoleWidget({
     Key? key,
@@ -157,44 +151,13 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
   @override
   void initState() {
     super.initState();
-    P04INCOMINGvar_BP12PH.ItemNow = 0;
-    context.read<P04INCOMING_BP12PHgetlist>().add(GetDataPressed());
-
-    _timer = Timer.periodic(Duration(seconds: 1), _updateCounter);
-  }
-
-  int _counter = 0;
-
-  void _updateCounter(Timer timer) {
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.undercontrol = true;
-    Dio().post(
-      "http://172.101.32.145:1880/" + "getmicro",
-      data: {},
-    ).then((value) {
-      var databuff = value.data;
-
-      if (databuff["DATA"] != null) {
-        P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT =
-            databuff["DATA"].toString();
-
-        setState(() {});
-        print("-");
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    // Dispose the timer when the widget is disposed
-    _timer.cancel();
-    super.dispose();
+    P11INCOMINGvar_BP12PAL.ItemNow = 0;
+    context.read<P11INCOMING_BP12PALgetlist>().add(GetDataPressed());
   }
 
   @override
   Widget build(BuildContext context) {
-    P04INCOMINGvar_BP12PH.MATNRnowMEM = widget.data.f01;
-    P04INCOMINGvar_BP12PH.CHARGnowMEM = widget.data.f05;
-    P04INCOMING_BP12PHmaincontextbox = context;
+    P11INCOMING_BP12PALmaincontextbox = context;
     List<listdataincomming> _list = widget.list ?? [];
     statusinc _status = widget.status ?? statusinc();
     List<Widget> CONCOLE = [];
@@ -203,252 +166,133 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
     );
 
     if (_list.length > 0) {
-      // print(_list[P04INCOMINGvar_BP12PH.ItemNow].RESULTFORMAT);
-      if (_list[P04INCOMINGvar_BP12PH.ItemNow].ITEMcode != '' &&
-          _list[P04INCOMINGvar_BP12PH.ItemNow].ITEMcode != '-') {
+      if (_list[P11INCOMINGvar_BP12PAL.ItemNow].ITEMcode != '' &&
+          _list[P11INCOMINGvar_BP12PAL.ItemNow].ITEMcode != '-') {
         //
-
-        if (P04INCOMINGvar_BP12PH.modeNOGOOD == false) {
+        if (P11INCOMINGvar_BP12PAL.modeNOGOOD == false) {
           if (_status.status == 'GOOD' ||
               _status.status == 'reject' ||
               _status.status == '' ||
               _status.status == '-') {
-            if (_list[P04INCOMINGvar_BP12PH.ItemNow].RESULTFORMAT != 'Number') {
-              con = NormalCheck(
-                PCS: _list[P04INCOMINGvar_BP12PH.ItemNow].pcs,
-                Fre: _list[P04INCOMINGvar_BP12PH.ItemNow].fre,
-                status: _status.status, //GOOD //reject
-                botonCOLOR: _status.status == '',
-                modeNOGOODRT: (s) {
-                  // print(s); //Good=true,NoGood=false
-                  if (s) {
-                    context.read<P04INCOMING_BP12PHSET>().add(SETDataPressedST(
-                          ITEMcode:
-                              _list[P04INCOMINGvar_BP12PH.ItemNow].ITEMcode,
-                        ));
-                  } else {
-                    setState(() {
-                      P04INCOMINGvar_BP12PH.modeNOGOOD = true;
-                    });
-                  }
-                },
-              );
-            } else {
-              con = InputDataCheck(
-                blockGOOD: _status.status != '',
-                point: _list[P04INCOMINGvar_BP12PH.ItemNow].point,
-                PCS: _list[P04INCOMINGvar_BP12PH.ItemNow].pcs,
-                Fre: _list[P04INCOMINGvar_BP12PH.ItemNow].fre,
-                status: _status.status, //GOOD //reject
-                botonCOLOR: _status.status == '',
-                modeNOGOODRT: (s) {
-                  // print(s); //Good=true,NoGood=false
-                  if (s) {
-                    if (P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT !=
-                        '') {
-                      context
-                          .read<P04INCOMING_BP12PHSET>()
-                          .add(SETDataPressedST(
-                            ITEMcode:
-                                _list[P04INCOMINGvar_BP12PH.ItemNow].ITEMcode,
-                          ));
-                    } else {}
-                  } else {
-                    setState(() {
-                      P04INCOMINGvar_BP12PH.modeNOGOOD = true;
-                    });
-                  }
-                },
-                undercontrol:
-                    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.undercontrol,
-                DATAINPUT: P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT,
-                DATAINPUTFN: (s) {
-                  P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT = s;
-                },
-                Refresh: (s) {
-                  P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.undercontrol = true;
-                  Dio().post(
-                    "http://172.101.32.145:1880/" + "getmicro",
-                    data: {},
-                  ).then((value) {
-                    var databuff = value.data;
-
-                    if (databuff["DATA"] != null) {
-                      P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT =
-                          databuff["DATA"].toString();
-
-                      setState(() {});
-                    }
+            con = NormalCheck(
+              PCS: _list[P11INCOMINGvar_BP12PAL.ItemNow].pcs,
+              Fre: _list[P11INCOMINGvar_BP12PAL.ItemNow].fre,
+              status: _status.status, //GOOD //reject
+              botonCOLOR: _status.status == '',
+              modeNOGOODRT: (s) {
+                // print(s); //Good=true,NoGood=false
+                if (s) {
+                  context.read<P11INCOMING_BP12PALSET>().add(SETDataPressedST(
+                        ITEMcode:
+                            _list[P11INCOMINGvar_BP12PAL.ItemNow].ITEMcode,
+                      ));
+                } else {
+                  setState(() {
+                    P11INCOMINGvar_BP12PAL.modeNOGOOD = true;
                   });
-                },
-                Enabled: false,
-                pointremain:
-                    "${P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.datainlist.length}",
-                get: (v) {
-                  if (_status.status == '') {
-                    if (P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
-                            .setofdatainlist.length <
-                        int.parse(_list[P04INCOMINGvar_BP12PH.ItemNow].pcs)) {
-                      if (P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT !=
-                          '') {
-                        if (P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
-                                .datainlist.length <
-                            int.parse(
-                                _list[P04INCOMINGvar_BP12PH.ItemNow].point)) {
-                          P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.datainlist
-                              .add(datainwait(
-                                  NO:
-                                      "${P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.datainlist.length + 1}",
-                                  VALUE:
-                                      P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
-                                          .DATAINPUT));
-                          P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.DATAINPUT =
-                              '';
-                          setState(() {});
-                        }
-                      }
-                    }
-                  }
-                },
-                picremain:
-                    "${P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.setofdatainlist.length}",
-                finish: (v) {
-                  if (_status.status == '') {
-                    if (P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
-                            .datainlist.length >=
-                        int.parse(_list[P04INCOMINGvar_BP12PH.ItemNow].point)) {
-                      if (P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
-                              .setofdatainlist.length <
-                          int.parse(_list[P04INCOMINGvar_BP12PH.ItemNow].pcs)) {
-                        P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.setofdatainlist
-                            .add(P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
-                                .datainlist);
-
-                        P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.datainlist =
-                            [];
-
-                        setState(() {});
-                      }
-                    } else if (P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
-                                .datainlist.length ==
-                            0 &&
-                        P04INCOMINGvar_BP12PH_INCOMINGDATAoutput
-                                .setofdatainlist.length ==
-                            int.parse(
-                                _list[P04INCOMINGvar_BP12PH.ItemNow].pcs)) {
-                      print("FINISH");
-                      context
-                          .read<P04INCOMING_BP12PHSET>()
-                          .add(SETDataPressedSTWDATA(
-                            ITEMcode:
-                                _list[P04INCOMINGvar_BP12PH.ItemNow].ITEMcode,
-                          ));
-                    }
-                  }
-                },
-                datalistin: P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.datainlist,
-              );
-            }
+                }
+              },
+            );
           } else {
             con = WattingItem(
-              PCS: _list[P04INCOMINGvar_BP12PH.ItemNow].pcs,
-              Fre: _list[P04INCOMINGvar_BP12PH.ItemNow].fre,
+              PCS: _list[P11INCOMINGvar_BP12PAL.ItemNow].pcs,
+              Fre: _list[P11INCOMINGvar_BP12PAL.ItemNow].fre,
               Confirm: (b) {
-                context.read<P04INCOMING_BP12PHSET>().add(SETDataPressedST(
-                      ITEMcode: _list[P04INCOMINGvar_BP12PH.ItemNow].ITEMcode,
+                context.read<P11INCOMING_BP12PALSET>().add(SETDataPressedST(
+                      ITEMcode: _list[P11INCOMINGvar_BP12PAL.ItemNow].ITEMcode,
                     ));
               },
               NOConfirm: (b) {
-                context.read<P04INCOMING_BP12PHSET>().add(SETDataPressedRJ(
-                      ITEMcode: _list[P04INCOMINGvar_BP12PH.ItemNow].ITEMcode,
+                context.read<P11INCOMING_BP12PALSET>().add(SETDataPressedRJ(
+                      ITEMcode: _list[P11INCOMINGvar_BP12PAL.ItemNow].ITEMcode,
                     ));
               },
             );
           }
         } else {
           con = NOGOODconfirm(
-            NoGoodPage: P04INCOMINGvar_BP12PH_NOGOODcon.NoGoodPage,
-            yesno: P04INCOMINGvar_BP12PH_NOGOODcon.yesno,
+            NoGoodPage: P11INCOMINGvar_BP12PAL_NOGOODcon.NoGoodPage,
+            yesno: P11INCOMINGvar_BP12PAL_NOGOODcon.yesno,
             yesnoRT: (n) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.yesno = n;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.yesno = n;
               });
             },
-            SpacialAccText: P04INCOMINGvar_BP12PH_NOGOODcon.SpacialAccText,
+            SpacialAccText: P11INCOMINGvar_BP12PAL_NOGOODcon.SpacialAccText,
             SpacialAccTextrt: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.SpacialAccText = s;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.SpacialAccText = s;
               });
             },
-            attper: P04INCOMINGvar_BP12PH_NOGOODcon.attper,
+            attper: P11INCOMINGvar_BP12PAL_NOGOODcon.attper,
             attperrt: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.attper = s;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.attper = s;
               });
             },
             PiecesDropdownSelected:
-                P04INCOMINGvar_BP12PH_NOGOODcon.PiecesDropdownSelected,
+                P11INCOMINGvar_BP12PAL_NOGOODcon.PiecesDropdownSelected,
             PiecesDropdownSelectedRT: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.PiecesDropdownSelected = s;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.PiecesDropdownSelected = s;
               });
             },
             NextorBack: (s) {
-              if (P04INCOMINGvar_BP12PH_NOGOODcon.yesno == 1) {
+              if (P11INCOMINGvar_BP12PAL_NOGOODcon.yesno == 1) {
                 // print("NEXT");
                 setState(() {
-                  P04INCOMINGvar_BP12PH_NOGOODcon.NoGoodPage = 2;
+                  P11INCOMINGvar_BP12PAL_NOGOODcon.NoGoodPage = 2;
                 });
               } else {
                 // print("BACK");
                 setState(() {
-                  P04INCOMINGvar_BP12PH.modeNOGOOD = false;
+                  P11INCOMINGvar_BP12PAL.modeNOGOOD = false;
                 });
               }
             },
-            base64pic01: P04INCOMINGvar_BP12PH_NOGOODcon.base64pic01,
+            base64pic01: P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic01,
             base64pic01RT: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.base64pic01 = s;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic01 = s;
               });
             },
-            base64pic02: P04INCOMINGvar_BP12PH_NOGOODcon.base64pic02,
+            base64pic02: P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic02,
             base64pic02RT: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.base64pic02 = s;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic02 = s;
               });
             },
-            base64pic03: P04INCOMINGvar_BP12PH_NOGOODcon.base64pic03,
+            base64pic03: P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic03,
             base64pic03RT: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.base64pic03 = s;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic03 = s;
               });
             },
-            base64pic04: P04INCOMINGvar_BP12PH_NOGOODcon.base64pic04,
+            base64pic04: P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic04,
             base64pic04RT: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.base64pic04 = s;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic04 = s;
               });
             },
-            base64pic05: P04INCOMINGvar_BP12PH_NOGOODcon.base64pic05,
+            base64pic05: P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic05,
             base64pic05RT: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.base64pic05 = s;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.base64pic05 = s;
               });
             },
             NoGoodPageRT: (s) {
               setState(() {
-                P04INCOMINGvar_BP12PH_NOGOODcon.NoGoodPage = 1;
+                P11INCOMINGvar_BP12PAL_NOGOODcon.NoGoodPage = 1;
               });
             },
             modeNOGOODRT: (s) {
               //Finish
               // print(s);
-              context.read<P04INCOMING_BP12PHSET>().add(SETDataPressedW8(
-                    ITEMcode: _list[P04INCOMINGvar_BP12PH.ItemNow].ITEMcode,
+              context.read<P11INCOMING_BP12PALSET>().add(SETDataPressedW8(
+                    ITEMcode: _list[P11INCOMINGvar_BP12PAL.ItemNow].ITEMcode,
                   ));
               setState(() {
-                P04INCOMINGvar_BP12PH.modeNOGOOD = false;
+                P11INCOMINGvar_BP12PAL.modeNOGOOD = false;
               });
             },
           );
@@ -477,25 +321,25 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
     //   },
     // );
 
-    print('--->${P04INCOMINGvar_BP12PH.ItemNow}');
+    print('--->${P11INCOMINGvar_BP12PAL.ItemNow}');
 
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MATNRnow = widget.data.f01;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.CHARGnow = widget.data.f05;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.MATNRnow = widget.data.f01;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.CHARGnow = widget.data.f05;
     //-------------------------------------------------------------------  INFORMATION
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MBLNRnow = widget.data.f11;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.BWARTnow = widget.data.f12;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MENGEnow = widget.data.f13;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MEINSnow = widget.data.f14;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MAT_FGnow = widget.data.f15;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.KUNNRnow = widget.data.f16;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.SORTLnow = widget.data.f17;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.NAME1now = widget.data.f18;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.CUST_LOTnow = widget.data.f19;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.PART_NMnow = widget.data.f20;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.PART_NOnow = widget.data.f21;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.PROCESSnow = widget.data.f22;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.OLDMAT_CPnow = widget.data.f23;
-    P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.STATUSnow = widget.data.f24;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.MBLNRnow = widget.data.f11;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.BWARTnow = widget.data.f12;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.MENGEnow = widget.data.f13;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.MEINSnow = widget.data.f14;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.MAT_FGnow = widget.data.f15;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.KUNNRnow = widget.data.f16;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.SORTLnow = widget.data.f17;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.NAME1now = widget.data.f18;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.CUST_LOTnow = widget.data.f19;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.PART_NMnow = widget.data.f20;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.PART_NOnow = widget.data.f21;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.PROCESSnow = widget.data.f22;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.OLDMAT_CPnow = widget.data.f23;
+    P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.STATUSnow = widget.data.f24;
     //-------------------------------------------------------------------
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -626,7 +470,7 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                         Container(
                           width: 150,
                           child: Text(
-                            ': ' + widget.data.f06,
+                            ': ' + widget.data.f07,
                             // style: TxtStylePOP(fontSize: 20)
                           ),
                         ),
@@ -676,7 +520,7 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                                         color: Colors.black),
                                     child: Center(
                                       child: Text(
-                                        "USER : ${P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.UserNO}",
+                                        "USER : ${P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.UserNO}",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -743,7 +587,7 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                                     child: Text(
                                   _list.length == 0
                                       ? 'Loading...'
-                                      : _list[P04INCOMINGvar_BP12PH.ItemNow]
+                                      : _list[P11INCOMINGvar_BP12PAL.ItemNow]
                                           .ITEMname,
                                 )),
                               )),
@@ -756,15 +600,15 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                               flex: 2,
                               child: InkWell(
                                 onTap: () {
-                                  if (P04INCOMINGvar_BP12PH.ItemNow > 0) {
+                                  if (P11INCOMINGvar_BP12PAL.ItemNow > 0) {
                                     setState(() {
-                                      P04INCOMINGvar_BP12PH.ItemNow--;
+                                      P11INCOMINGvar_BP12PAL.ItemNow--;
                                     });
                                     context
-                                        .read<P04INCOMING_BP12PHgetstatus>()
+                                        .read<P11INCOMING_BP12PALgetstatus>()
                                         .add(GetDataPressedST(
-                                          ITEMcode: _list[
-                                                  P04INCOMINGvar_BP12PH.ItemNow]
+                                          ITEMcode: _list[P11INCOMINGvar_BP12PAL
+                                                  .ItemNow]
                                               .ITEMcode,
                                         ));
                                   }
@@ -786,16 +630,16 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                               flex: 2,
                               child: InkWell(
                                 onTap: () {
-                                  if (P04INCOMINGvar_BP12PH.ItemNow <
+                                  if (P11INCOMINGvar_BP12PAL.ItemNow <
                                       _list.length - 1) {
                                     setState(() {
-                                      P04INCOMINGvar_BP12PH.ItemNow++;
+                                      P11INCOMINGvar_BP12PAL.ItemNow++;
                                     });
                                     context
-                                        .read<P04INCOMING_BP12PHgetstatus>()
+                                        .read<P11INCOMING_BP12PALgetstatus>()
                                         .add(GetDataPressedST(
-                                          ITEMcode: _list[
-                                                  P04INCOMINGvar_BP12PH.ItemNow]
+                                          ITEMcode: _list[P11INCOMINGvar_BP12PAL
+                                                  .ItemNow]
                                               .ITEMcode,
                                         ));
                                   }
@@ -872,7 +716,7 @@ class ReportButton extends StatelessWidget {
         onPressed: () {
           // contexttable.read<Report_Bloc>().add(CreateReport());
           // js.context.callMethod('open', [
-          //   'http://172.20.30.46/ReportServer?%2fReport+Project4%2fincomming-v1&rs:Format=PDF&rs:Command=Render&T1=${P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.MATNRnow}-${P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.CHARGnow}'
+          //   'http://172.20.30.46/ReportServer?%2fReport+Project4%2fincomming-v1&rs:Format=PDF&rs:Command=Render&T1=${P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.MATNRnow}-${P11INCOMINGvar_BP12PAL_INCOMINGDATAoutput.CHARGnow}'
           // ]);
           // print(
           //     'http://172.20.30.46/ReportServer?%2fReport+Project4%2fincomming-v1&rs:Format=PDF&rs:Command=Render&T1=${MATNRnow}-${CHARGnow}');

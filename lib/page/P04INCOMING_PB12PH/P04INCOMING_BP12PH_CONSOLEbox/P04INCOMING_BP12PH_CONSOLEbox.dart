@@ -22,6 +22,7 @@ import '../../../widget/box/01-normal.dart';
 import '../../../widget/box/02-nogood.dart';
 import '../../../widget/box/03-waiting.dart';
 import '../../../widget/box/05-inputdata.dart';
+import '../../../widget/common/Advancedropdown.dart';
 import '../P04INCOMINGvar_BP12PH.dart';
 
 late BuildContext P04INCOMING_BP12PHmaincontextbox;
@@ -166,9 +167,14 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
   int _counter = 0;
 
   void _updateCounter(Timer timer) {
+    String _INSTRU = P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.INSTRU;
+    if (_INSTRU == '') {
+      _INSTRU = 'CTCROG001_OUT';
+    }
     P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.undercontrol = true;
     Dio().post(
-      "http://172.101.32.145:1880/" + "getmicro",
+      // "http://172.101.32.145:1880/" + "getmicro",
+      "http://172.23.10.40:1900/" + _INSTRU,
       data: {},
     ).then((value) {
       var databuff = value.data;
@@ -268,7 +274,8 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                 Refresh: (s) {
                   P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.undercontrol = true;
                   Dio().post(
-                    "http://172.101.32.145:1880/" + "getmicro",
+                    // "http://172.101.32.145:1880/" + "getmicro",
+                    "http://172.23.10.40:1900/" + "CTCROG001_OUT",
                     data: {},
                   ).then((value) {
                     var databuff = value.data;
@@ -657,6 +664,27 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                       ],
                     ),
                     Spacer(),
+                    AdvanceDropDown(
+                      // isEnable: P1INPUTRAWDATAMAINVAR.PLANT != '',
+                      // sLabel: "Select Loacation",
+                      imgpath: '',
+                      listdropdown: const [
+                        MapEntry("", ""),
+                        MapEntry("CTCROG001", "CTCROG001_OUT"),
+                        MapEntry("SURMIC001", "SURMIC001_OUT"),
+                      ],
+
+                      //CTCROG001
+                      //SURMIC001
+                      onChangeinside: (d, v) {
+                        P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.INSTRU = d;
+
+                        setState(() {});
+                      },
+                      value: P04INCOMINGvar_BP12PH_INCOMINGDATAoutput.INSTRU,
+                      height: 40,
+                      width: 200,
+                    ),
                     SizedBox(
                         height: 40,
                         child: Column(

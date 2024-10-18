@@ -45,6 +45,8 @@ class P04INCOMINGvar_BP12PH_INCOMINGDATAoutput {
   static String ITEMspecialAccStatusNow = '';
   static String ITEMspecialAccCOMMENTNow = '';
 
+  static String INSTRU = '';
+
   static String PiecesDropdownSelected = '';
 
   static String DATAINPUT = '';
